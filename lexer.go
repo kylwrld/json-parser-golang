@@ -45,7 +45,6 @@ func Lex(str string) []interface{} {
 	var tokens []interface{}
 
 	for len(str) != 0 {
-		fmt.Println(str)
 		var json_string string
 		var ok bool
 		json_string, str, ok = lex_string(str)
@@ -81,7 +80,7 @@ func Lex(str string) []interface{} {
 			tokens = append(tokens, string(char))
 			str = str[1:]
 		} else {
-			err := fmt.Sprintf("UNEXPECTED CHARACTER: %b", char)
+			err := fmt.Sprintf("UNEXPECTED CHARACTER: %c", char)
 			panic(err)
 		}
 	}
@@ -134,7 +133,7 @@ func lex_number(str string) (interface{}, string, bool) {
 		return float, str, true
 	}
 
-	int, err := strconv.ParseInt(json_number, 10, 2)
+	int, err := strconv.ParseInt(json_number, 10, 64)
 	if err != nil {
 		panic(err)
 	}
